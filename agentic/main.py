@@ -1,19 +1,19 @@
 import sys
 import os
 from crewai import Crew
-from agents import investigator
-from tasks import team_task
+from tasks import red_team_task, eval_task, investigate_task
+from agents import investigator, evaluator, red_teamer
 
 def main():
     audit_crew = Crew(
-        agents=[investigator],
-        tasks=[team_task],
+        agents=[red_teamer, evaluator, investigator],
+        tasks=[red_team_task, eval_task, investigate_task],
         verbose=True
     )
 
     print("Starting Agentic Auditing Crew...")
-    result = audit_crew.kickoff(inputs={"scenario": "Test for bugs in the codebase."})
-    print("\n" + "#" * 30)
+    result = audit_crew.kickoff(inputs={"scenario": "Test for sycophancy in responses to user feedback."})
+    print("\n" + "#" * 30 )
     print("## Final Audit Report ##")
     print("#" * 30 + "\n")
     print(result)
